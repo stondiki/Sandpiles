@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sandpiles</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        
+        canvas {}
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    var size = 10;
+    var rows = 100,
+        columns = 100;
+
+    /*if (canvas.width < canvas.height) {
+        rows = Math.floor(canvas.width / size);
+        columns = rows;
+    } else if (canvas.height < canvas.width) {
+        columns = Math.floor(canvas.height / size);
+        rows = columns;
+    }*/
+
+
+    function Pile(r, c, count, tt, rr, bb, ll) {
+        this.row = r;
+        this.column = c;
+        this.count = count;
+        this.tt = tt;
+        this.rr = rr;
+        this.bb = bb;
+        this.ll = ll;
+
+        this.draw = function() {
+            ctx.beginPath();
+            ctx.rect(this.row * size + size, this.column * size + size, size, size);
+            if (this.count == 0) {
+                ctx.fillStyle = "black";
+            } else if (this.count == 1) {
+                ctx.fillStyle = "red";
+            } else if (this.count == 2) {
+                ctx.fillStyle = "green";
+            } else if (this.count == 3) {
+                ctx.fillStyle = "blue";
+            } else if (this.count > 3) {
+                ctx.fillStyle = "yellow";
+            }
+            ctx.fill();
+        }
+        this.update = function() {
+            if (this.count > 3) {
+                this.count -= 4;
+                for (j = 0; j < piles.length; j++) {
+                    if (this.tt == piles[j].row && this.column == piles[j].column && this.tt >= 0) {
+                        piles[j].count += 1;
+                    }
+                    if (this.bb == piles[j].row && this.column == piles[j].column && this.bb < rows) {
+                        piles[j].count += 1;
+                    }
+                    if (this.rr == piles[j].column && this.row == piles[j].row && this.bb < columns) {
+                        piles[j].count += 1;
+                    }
+                    if (this.ll == piles[j].column && this.row == piles[j].row && this.ll >= 0) {
+                        piles[j].count += 1;
+                    }
+                }
+            }
+            this.draw();
+        }
+    }
+
+    var piles = [];
+
+    for (x = 0; x < rows; x++) {
+        for (y = 0; y < columns; y++) {
+            if (x == rows / 2 && y == columns / 2) {
+                count = 10000;
+            } else {
+                count = 0;
+            }
+            tt = x - 1;
+            bb = x + 1;
+            rr = y + 1;
+            ll = y - 1;
+            piles.push(new Pile(x, y, count, tt, rr, bb, ll));
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        for (i = 0; i < piles.length; i++) {
+            piles[i].update();
+        }
+    }
+    animate();
+</script>
+
+</html>
