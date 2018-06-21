@@ -56,16 +56,24 @@
             } else if (this.count == 1) {
                 ctx.fillStyle = "red";
             } else if (this.count == 2) {
-                ctx.fillStyle = "green";
+                ctx.fillStyle = "orange";
             } else if (this.count == 3) {
-                ctx.fillStyle = "blue";
-            } else if (this.count > 3) {
                 ctx.fillStyle = "yellow";
+            } else if (this.count == 4) {
+                ctx.fillStyle = "green";
+            } else if (this.count == 5) {
+                ctx.fillStyle = "blue";
+            } else if (this.count == 6) {
+                ctx.fillStyle = "indigo";
+            } else if (this.count == 7) {
+                ctx.fillStyle = "violet";
+            } else if (this.count > 7) {
+                ctx.fillStyle = "brown";
             }
             ctx.fill();
         }
         this.update = function() {
-            if (this.count > 3) {
+            if (this.count > 7) {
                 this.count -= 4;
                 for (j = 0; j < piles.length; j++) {
                     if (this.tt == piles[j].row && this.column == piles[j].column && this.tt >= 0) {
@@ -91,7 +99,7 @@
     for (x = 0; x < rows; x++) {
         for (y = 0; y < columns; y++) {
             if (x == rows / 2 && y == columns / 2) {
-                count = 10000;
+                count = 100000;
             } else {
                 count = 0;
             }
