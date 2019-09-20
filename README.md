@@ -1,5 +1,5 @@
 # Sandpiles
 
-# CREDITS
+### CREDITS
  https://www.youtube.com/watch?v=diGjw5tghYU
 
